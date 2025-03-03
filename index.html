@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verticolls</title>
+    <style>
+        .categoria h2 img {
+            height: 100px;
+            vertical-align: middle;
+            margin-right: 20px;
+            float: left; /* Alinea la imagen a la izquierda */
+        }
+        body { 
+            font-family: 'Segoe UI', Arial; 
+            padding: 20px; 
+            background: #0481f76c;
+            max-width: 1200px; /* Limita el ancho máximo del contenido */
+            margin: 0 auto; /* Centra el contenido en la página */
+            text-align: center; /* Centra el texto dentro del body */
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centra el contenido del header */
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            height: 80px;
+            margin-right: 30px;
+        }
+        .seleccion-area {
+            margin: 20px auto; /* Centra el contenedor */
+            padding: 20px;
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 800px; /* Limita el ancho máximo */
+        }
+        select, input {
+            padding: 10px;
+            margin: 8px;
+            width: 300px;
+            border: 1px solid #15056f;
+            border-radius: 5px;
+        }
+        .categoria {
+            background: white;
+            margin: 25px auto; /* Centra el contenedor */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 800px; /* Limita el ancho máximo */
+            text-align: left; /* Alinea el texto a la izquierda dentro de la categoría */
+        }
+        .pregunta {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #2c3e50;
+            background: #f9f9f9;
+            text-align: left; /* Alinea el texto a la izquierda dentro de las preguntas */
+        }
+        .botones-calificacion {
+            display: flex; /* Hace que los botones estén en una fila */
+            justify-content: center; /* Centra los botones horizontalmente */
+            flex-wrap: wrap; /* Permite que los botones se envuelvan en varias líneas si es necesario */
+            gap: 10px; /* Espacio entre los botones */
+        }
+        button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #34495e;
+        }
+        button.seleccionado {
+            background: #27ae60 !important;
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: 2px solid #1d6fa5;
+        }
+        #resultado {
+            font-size: 28px;
+            color: #27ae60;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .grafico-container {
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 800px;
+        }
+        .info-auditoria {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            text-align: left; /* Alinea el texto a la izquierda dentro del info-auditoria */
+        }
+        @media (max-width: 600px) {
+    select, input {
+        width: 100%; /* Los campos de entrada ocupan el 100% del ancho */
+        margin: 8px 0; /* Espaciado vertical */
+    }
+    button {
+        width: 100%; /* Botones ocupan el 100% del ancho */
+        margin: 8px 0; /* Espaciado vertical */
+    }
+    .header {
+        flex-direction: column; /* Apila el logo y el texto verticalmente */
+        text-align: center;
+    }
+    .logo {
+        margin-right: 0; /* Elimina el margen derecho en móviles */
+        margin-bottom: 10px; /* Espaciado inferior */
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="LOGO VERTICOLLS.png" alt="Verticolls" class="logo">
+        <div>
+            <h1 style="color: #04488c; margin:10px">VCP</h1>
+            <p style="color: #e30d0d; margin:5px 0">NO RECIBO, NO HAGO Y NO MANDO,
+                CERO DEFECTOS.</p>
+        </div>
+    </div>
+
+    <div class="seleccion-area">
+        <div class="info-auditoria" style="display: flex; justify-content: space-between; align-items: flex-start; font-size: 14px;">
+            <div>
+                <div>🕒 Fecha y hora de inicio: <span id="fecha-inicio">No iniciada</span></div>
+                <div>⏳ Duración: <span id="duracion">0m 00s</span></div>
+            </div>
+            <div style="text-align: justify; font-size: 12px;">
+                <strong>Criterios de Evaluación:</strong>
+                <ul style="list-style-type: none; padding-left: 0; margin: 5px 0;">
+                    <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <span style="margin-right: 5px;">✅</span>
+                        <strong>Muy Bueno:</strong> Se cumple de manera excelente y sin fallos.
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <span style="margin-right: 5px;">✔️</span>
+                        <strong>Bueno:</strong> Se cumple adecuadamente, con pocos fallos.
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <span style="margin-right: 5px;">➖</span>
+                        <strong>Medio:</strong> Se cumple parcialmente, pero con áreas de mejora.
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <span style="margin-right: 5px;">❌</span>
+                        <strong>Malo:</strong> Se cumple de manera insuficiente.
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                        <span style="margin-right: 5px;">🚫</span>
+                        <strong>Muy Malo:</strong> No se cumple en absoluto.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h3>📋 Datos de la Auditoría</h3>
+        <select id="area">
+            <option value="">Seleccione Área</option>
+            <option>Mesa de corte</option>
+            <option>Recibos</option>
+            <option>Canteo</option>
+            <option>Filos muertos</option>
+            <option>Biselado</option>
+            <option>Pulpo</option>
+            <option>Mantenimiento</option>
+            <option>Retrabajos</option>
+            <option>Dibujos</option>
+            <option>Taladros</option>
+            <option>CNC</option>
+            <option>Lavado</option>
+            <option>Templado</option>
+            <option>Laminado</option>
+            <option>Arenado</option>
+            <option>Línea de doble vidrio</option>
+            <option>Comedor</option>
+            <option>Ventas</option>
+            <option>Administrativas</option>
+            <option>Gerencia</option>
+        </select>
+        <input type="text" id="auditor" placeholder="👤 Nombre del auditor">
+    </div>
+
+    <!-- Preguntas completas -->
+        <div class="categoria">
+            <h2><img src="SELECCIONADOR.png" alt="Seleccionador"> Clasificar (SEIRE)</h2>
+            <div class="pregunta">
+                <h3>1. ¿El área está libre de objetos, herramientas o materiales que no se usan?</h3>
+                <button onclick="calificar(1, 1, this)">Muy Malo</button>
+                <button onclick="calificar(1, 2, this)">Malo</button>
+                <button onclick="calificar(1, 3, this)">Medio</button>
+                <button onclick="calificar(1, 4, this)">Bueno</button>
+                <button onclick="calificar(1, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>2. ¿Se revisa regularmente el área para retirar lo que no se necesita?</h3>
+                <button onclick="calificar(2, 1, this)">Muy Malo</button>
+                <button onclick="calificar(2, 2, this)">Malo</button>
+                <button onclick="calificar(2, 3, this)">Medio</button>
+                <button onclick="calificar(2, 4, this)">Bueno</button>
+                <button onclick="calificar(2, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>3. ¿Los trabajadores saben diferenciar entre lo necesario y lo innecesario?</h3>
+                <button onclick="calificar(3, 1, this)">Muy Malo</button>
+                <button onclick="calificar(3, 2, this)">Malo</button>
+                <button onclick="calificar(3, 3, this)">Medio</button>
+                <button onclick="calificar(3, 4, this)">Bueno</button>
+                <button onclick="calificar(3, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>4. ¿Hay un lugar designado para guardar temporalmente objetos que deben ser descartados o retirados?</h3>
+                <button onclick="calificar(4, 1, this)">Muy Malo</button>
+                <button onclick="calificar(4, 2, this)">Malo</button>
+                <button onclick="calificar(4, 3, this)">Medio</button>
+                <button onclick="calificar(4, 4, this)">Bueno</button>
+                <button onclick="calificar(4, 5, this)">Muy Bueno</button>
+            </div>
+        </div>
+    
+        <div class="categoria">
+            <h2><img src="ordenador.png" alt="Ordenador"> Ordenar (SEITON)</h2>
+            <div class="pregunta">
+                <h3>5. ¿Las herramientas y materiales tienen un lugar específico y están bien identificados?</h3>
+                <button onclick="calificar(5, 1, this)">Muy Malo</button>
+                <button onclick="calificar(5, 2, this)">Malo</button>
+                <button onclick="calificar(5, 3, this)">Medio</button>
+                <button onclick="calificar(5, 4, this)">Bueno</button>
+                <button onclick="calificar(5, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>6. ¿Es fácil encontrar lo que se necesita en menos de 30 segundos?</h3>
+                <button onclick="calificar(6, 1, this)">Muy Malo</button>
+                <button onclick="calificar(6, 2, this)">Malo</button>
+                <button onclick="calificar(6, 3, this)">Medio</button>
+                <button onclick="calificar(6, 4, this)">Bueno</button>
+                <button onclick="calificar(6, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>7. ¿Se usan etiquetas, colores o marcas para facilitar la organización?</h3>
+                <button onclick="calificar(7, 1, this)">Muy Malo</button>
+                <button onclick="calificar(7, 2, this)">Malo</button>
+                <button onclick="calificar(7, 3, this)">Medio</button>
+                <button onclick="calificar(7, 4, this)">Bueno</button>
+                <button onclick="calificar(7, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>8. ¿El orden de los elementos sigue el flujo de trabajo?</h3>
+                <button onclick="calificar(8, 1, this)">Muy Malo</button>
+                <button onclick="calificar(8, 2, this)">Malo</button>
+                <button onclick="calificar(8, 3, this)">Medio</button>
+                <button onclick="calificar(8, 4, this)">Bueno</button>
+                <button onclick="calificar(8, 5, this)">Muy Bueno</button>
+            </div>
+        </div>
+    
+        <div class="categoria">
+            <h2><img src="limpiador.png" alt="Limpiador"> Limpiar (SEISO)</h2>
+            <div class="pregunta">
+                <h3>9. ¿El área está libre de suciedad, polvo o desorden?</h3>
+                <button onclick="calificar(9, 1, this)">Muy Malo</button>
+                <button onclick="calificar(9, 2, this)">Malo</button>
+                <button onclick="calificar(9, 3, this)">Medio</button>
+                <button onclick="calificar(9, 4, this)">Bueno</button>
+                <button onclick="calificar(9, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>10. ¿Se han corregido las fuentes de suciedad (fugas, residuos, etc.)?</h3>
+                <button onclick="calificar(10, 1, this)">Muy Malo</button>
+                <button onclick="calificar(10, 2, this)">Malo</button>
+                <button onclick="calificar(10, 3, this)">Medio</button>
+                <button onclick="calificar(10, 4, this)">Bueno</button>
+                <button onclick="calificar(10, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>11. ¿Se realiza limpieza diaria o periódica del área de trabajo?</h3>
+                <button onclick="calificar(11, 1, this)">Muy Malo</button>
+                <button onclick="calificar(11, 2, this)">Malo</button>
+                <button onclick="calificar(11, 3, this)">Medio</button>
+                <button onclick="calificar(11, 4, this)">Bueno</button>
+                <button onclick="calificar(11, 5, this)">Muy Bueno</button>
+            </div>
+            <div class="pregunta">
+                <h3>12. ¿Los trabajadores tienen responsabilidades claras para mantener la limpieza?</h3>
+                <button onclick="calificar(12, 1, this)">Muy Malo</button>
+                <button onclick="calificar(12, 2, this)">Malo</button>
+                <button onclick="calificar(12, 3, this)">Medio</button>
+                <button onclick="calificar(12, 4, this)">Bueno</button>
+                <button onclick="calificar(12, 5, this)">Muy Bueno</button>
+            </div>
+        </div>
+    
+
+
+    <div style="text-align: center; margin-top: 40px;">
+        <div id="resultado">0%</div>
+        <div class="grafico-container">
+            <canvas id="graficoRadar"></canvas>
+        </div>
+        <button onclick="finalizarAuditoria()" style="background: #2c3e50; padding: 15px 30px; font-size: 16px;">
+            ✅ Finalizar Auditoría
+        </button>
+        <button onclick="verHistorial()" style="background: #7a7b7c; padding: 15px 30px; font-size: 16px; margin-left: 20px;">
+            📋 Ver Historial de Auditorías
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        
+        function verHistorial() {
+    // Redirigir a la página de historial
+    window.location.href = "historial.html";
+}
+        let respuestas = {};
+        let radarChart = null;
+        let tiempoInicio = null;
+        let intervaloDuracion = null;
+
+        const categorias = {
+            'Clasificar (SEIRE)': [1, 2, 3, 4],
+            'Ordenar (SEITON)': [5, 6, 7, 8],
+            'Limpiar (SEISO)': [9, 10, 11, 12]
+        };
+
+        function calcularPuntajeCategoria(preguntas) {
+            let total = 0;
+            let contador = 0;
+            preguntas.forEach(id => {
+                if (respuestas[id]) {
+                    total += respuestas[id];
+                    contador++;
+                }
+            });
+            return contador > 0 ? (total / (contador * 5)) * 100 : 0;
+        }
+
+        function actualizarGrafico() {
+            const datos = {
+                labels: Object.keys(categorias),
+                datasets: [{
+                    label: 'Puntuación por categoría',
+                    data: Object.values(categorias).map(preguntas => calcularPuntajeCategoria(preguntas)),
+                    backgroundColor: 'rgba(39, 174, 96, 0.2)',
+                    borderColor: '#27ae60',
+                    pointBackgroundColor: '#2c3e50',
+                    borderWidth: 2
+                }]
+            };
+
+            const ctx = document.getElementById('graficoRadar').getContext('2d');
+            if (radarChart) radarChart.destroy();
+            
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: datos,
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                color: '#666',
+                                font: { size: 12 }
+                            },
+                            pointLabels: {
+                                color: '#2c3e50',
+                                font: { size: 14 }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function calificar(preguntaId, valor, elemento) {
+            const contenedorPregunta = elemento.parentElement;
+            contenedorPregunta.querySelectorAll('button').forEach(btn => {
+                btn.classList.remove('seleccionado');
+            });
+            elemento.classList.add('seleccionado');
+            respuestas[preguntaId] = valor;
+
+            if (!tiempoInicio) {
+                tiempoInicio = new Date();
+                document.getElementById('fecha-inicio').textContent = tiempoInicio.toLocaleString();
+                intervaloDuracion = setInterval(actualizarDuracion, 1000);
+            }
+
+            const totalPreguntas = Object.keys(respuestas).length;
+            const suma = Object.values(respuestas).reduce((a, b) => a + b, 0);
+            const porcentaje = totalPreguntas > 0 ? (suma / (totalPreguntas * 5)) * 100 : 0;
+            document.getElementById('resultado').textContent = porcentaje.toFixed(0) + '%';
+            actualizarGrafico();
+        }
+
+        function actualizarDuracion() {
+            const ahora = new Date();
+            const diff = Math.floor((ahora - tiempoInicio) / 1000);
+            const minutos = Math.floor(diff / 60);
+            const segundos = diff % 60;
+            document.getElementById('duracion').textContent = 
+                `${minutos}m ${segundos.toString().padStart(2, '0')}s`;
+        }
+
+        function finalizarAuditoria() {
+            if (Object.keys(respuestas).length < 12) {
+                alert("¡Debes responder todas las preguntas!");
+                return;
+            }
+            
+
+            const auditoria = {
+                area: document.getElementById('area').value,
+                auditor: document.getElementById('auditor').value,
+                puntuacion: document.getElementById('resultado').textContent,
+                fecha: document.getElementById('fecha-inicio').textContent,
+                duracion: document.getElementById('duracion').textContent,
+                respuestas: respuestas
+            };
+
+         // Guardar en localStorage
+    const historial = JSON.parse(localStorage.getItem('historialAuditorias')) || [];
+    historial.push(auditoria);
+    localStorage.setItem('historialAuditorias', JSON.stringify(historial));
+
+            console.log('Resultados de la auditoría:', auditoria);
+            alert('Auditoría finalizada - Revisa la consola para los datos');
+            location.reload();
+        }
+    </script>
+</body>
+</html>
